@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RuleMapper">
+    
+    <sql id="ruleColumns">rule.ruleid AS rule_ruleid, rule.code AS rule_code, rule.codename AS rule_codename, rule.disp AS rule_disp, rule.type AS rule_type, rule.monitor_pointid AS rule_monitor_pointid, rule.rule_config AS rule_rule_config, rule.rulename AS rule_rulename, rule.rulecontent AS rule_rulecontent, rule.runrate AS rule_runrate, rule.createtime AS rule_createtime, rule.updatetime AS rule_updatetime, rule.deviceuuid AS rule_deviceuuid, rule.devicename AS rule_devicename, rule.relationid AS rule_relationid, rule.relationname AS rule_relationname, rule.devicemodelid AS rule_devicemodelid, rule.devicemodelname AS rule_devicemodelname, rule.salience AS rule_salience, rule.devicetypeid AS rule_devicetypeid, rule.devicetypename AS rule_devicetypename, rule.knowledgeid AS rule_knowledgeid, rule.userid AS rule_userid, rule.orgid AS rule_orgid, rule.orgcode AS rule_orgcode, rule.flag AS rule_flag, rule.partsid AS rule_partsid</sql>
+    
+    <sql id="ruleWhere">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="ruleid!=null">AND rule.ruleid = #{ruleid}</if>
+            <if test="code!=null">AND rule.code = #{code}</if>
+            <if test="codename!=null">AND rule.codename = #{codename}</if>
+            <if test="disp!=null">AND rule.disp = #{disp}</if>
+            <if test="type!=null">AND rule.type = #{type}</if>
+            <if test="monitorPointid!=null">AND rule.monitor_pointid = #{monitorPointid}</if>
+            <if test="ruleConfig!=null">AND rule.rule_config = #{ruleConfig}</if>
+            <if test="rulename!=null">AND rule.rulename = #{rulename}</if>
+            <if test="rulecontent!=null">AND rule.rulecontent = #{rulecontent}</if>
+            <if test="runrate!=0">AND rule.runrate = #{runrate}</if>
+            <if test="createtime!=null">AND rule.createtime = #{createtime}</if>
+            <if test="updatetime!=null">AND rule.updatetime = #{updatetime}</if>
+            <if test="deviceuuid!=null">AND rule.deviceuuid = #{deviceuuid}</if>
+            <if test="devicename!=null">AND rule.devicename = #{devicename}</if>
+            <if test="relationid!=null">AND rule.relationid = #{relationid}</if>
+            <if test="relationname!=null">AND rule.relationname = #{relationname}</if>
+            <if test="devicemodelid!=null">AND rule.devicemodelid = #{devicemodelid}</if>
+            <if test="devicemodelname!=null">AND rule.devicemodelname = #{devicemodelname}</if>
+            <if test="salience!=0">AND rule.salience = #{salience}</if>
+            <if test="devicetypeid!=null">AND rule.devicetypeid = #{devicetypeid}</if>
+            <if test="devicetypename!=null">AND rule.devicetypename = #{devicetypename}</if>
+            <if test="knowledgeid!=null">AND rule.knowledgeid = #{knowledgeid}</if>
+            <if test="userid!=null and userid!=''">AND rule.userid = #{userid}</if>
+            <if test="orgid!=null and orgid!=''">AND rule.orgid = #{orgid}</if>
+            <if test="orgcode!=null and orgcode!=''">AND rule.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+            <if test="flag!=null">AND rule.flag = #{flag}</if>
+            <if test="partsid!=null">AND rule.partsid = #{partsid}</if>
+        </trim>
+    </sql>
+    
+    <sql id="ruleOrder">
+        <if test="orderString!=null">ORDER BY ${orderString}</if>
+    </sql>
+    
+    <sql id="ruleLimit">LIMIT #{startLine},#{limitLine}</sql>
+    
+    <resultMap type="org.citic.iiot.diagnosis.domain.Rule" id="ruleResultMap">
+        <id column="rule_ruleid" property="ruleid" />
+        <result column="rule_code" property="code" />
+        <result column="rule_codename" property="codename" />
+        <result column="rule_disp" property="disp" />
+        <result column="rule_type" property="type" />
+        <result column="rule_monitor_pointid" property="monitorPointid" />
+        <result column="rule_rule_config" property="ruleConfig" />
+        <result column="rule_rulename" property="rulename" />
+        <result column="rule_rulecontent" property="rulecontent" />
+        <result column="rule_runrate" property="runrate" />
+        <result column="rule_createtime" property="createtime" />
+        <result column="rule_updatetime" property="updatetime" />
+        <result column="rule_deviceuuid" property="deviceuuid" />
+        <result column="rule_devicename" property="devicename" />
+        <result column="rule_relationid" property="relationid" />
+        <result column="rule_relationname" property="relationname" />
+        <result column="rule_devicemodelid" property="devicemodelid" />
+        <result column="rule_devicemodelname" property="devicemodelname" />
+        <result column="rule_salience" property="salience" />
+        <result column="rule_devicetypeid" property="devicetypeid" />
+        <result column="rule_devicetypename" property="devicetypename" />
+        <result column="rule_knowledgeid" property="knowledgeid" />
+        <result column="rule_userid" property="userid" />
+        <result column="rule_orgid" property="orgid" />
+        <result column="rule_orgcode" property="orgcode" />
+        <result column="rule_flag" property="flag" />
+        <result column="rule_partsid" property="partsid" />
+    </resultMap>
+    
+    <select id="findDao" resultMap="ruleResultMap">
+        SELECT
+        <include refid="ruleColumns" />
+        FROM rule
+        <include refid="ruleWhere" />
+        <include refid="ruleOrder" />
+    </select>
+    
+    <select id="countDao" resultType="int">
+        SELECT COUNT(*) FROM rule
+        <include refid="ruleWhere" />
+    </select>
+    
+    <select id="pageDao" resultMap="ruleResultMap">
+        SELECT
+        <include refid="ruleColumns" />
+        FROM rule
+        <include refid="ruleWhere" />
+        <include refid="ruleOrder" />
+        <include refid="ruleLimit" />
+    </select>
+    
+    <select id="limitDao" resultMap="ruleResultMap">
+        SELECT
+        <include refid="ruleColumns" />
+        FROM rule
+        <include refid="ruleWhere" />
+        <include refid="ruleOrder" />
+        <include refid="ruleLimit" />
+    </select>
+    
+    <insert id="saveDao">
+        INSERT INTO rule
+        <trim prefix="(" prefixOverrides=",">
+            <if test="ruleid!=null">,ruleid</if>
+            <if test="code!=null">,code</if>
+            <if test="codename!=null">,codename</if>
+            <if test="disp!=null">,disp</if>
+            <if test="type!=null">,type</if>
+            <if test="monitorPointid!=null">,monitor_pointid</if>
+            <if test="ruleConfig!=null">,rule_config</if>
+            <if test="rulename!=null">,rulename</if>
+            <if test="rulecontent!=null">,rulecontent</if>
+            <if test="runrate!=0">,runrate</if>
+            <if test="createtime!=null">,createtime</if>
+            <if test="updatetime!=null">,updatetime</if>
+            <if test="deviceuuid!=null">,deviceuuid</if>
+            <if test="devicename!=null">,devicename</if>
+            <if test="relationid!=null">,relationid</if>
+            <if test="relationname!=null">,relationname</if>
+            <if test="devicemodelid!=null">,devicemodelid</if>
+            <if test="devicemodelname!=null">,devicemodelname</if>
+            <if test="salience!=0">,salience</if>
+            <if test="devicetypeid!=null">,devicetypeid</if>
+            <if test="devicetypename!=null">,devicetypename</if>
+            <if test="knowledgeid!=null">,knowledgeid</if>
+            <if test="userid!=null">,userid</if>
+            <if test="orgid!=null">,orgid</if>
+            <if test="orgcode!=null">,orgcode</if>
+            <if test="flag!=null">,flag</if>
+            <if test="partsid!=null">,partsid</if>
+        </trim>
+        ) VALUES
+        <trim prefix="(" prefixOverrides=",">
+            <if test="ruleid!=null">,#{ruleid}</if>
+            <if test="code!=null">,#{code}</if>
+            <if test="codename!=null">,#{codename}</if>
+            <if test="disp!=null">,#{disp}</if>
+            <if test="type!=null">,#{type}</if>
+            <if test="monitorPointid!=null">,#{monitorPointid}</if>
+            <if test="ruleConfig!=null">,#{ruleConfig}</if>
+            <if test="rulename!=null">,#{rulename}</if>
+            <if test="rulecontent!=null">,#{rulecontent}</if>
+            <if test="runrate!=0">,#{runrate}</if>
+            <if test="createtime!=null">,#{createtime}</if>
+            <if test="updatetime!=null">,#{updatetime}</if>
+            <if test="deviceuuid!=null">,#{deviceuuid}</if>
+            <if test="devicename!=null">,#{devicename}</if>
+            <if test="relationid!=null">,#{relationid}</if>
+            <if test="relationname!=null">,#{relationname}</if>
+            <if test="devicemodelid!=null">,#{devicemodelid}</if>
+            <if test="devicemodelname!=null">,#{devicemodelname}</if>
+            <if test="salience!=0">,#{salience}</if>
+            <if test="devicetypeid!=null">,#{devicetypeid}</if>
+            <if test="devicetypename!=null">,#{devicetypename}</if>
+            <if test="knowledgeid!=null">,#{knowledgeid}</if>
+            <if test="userid!=null">,#{userid}</if>
+            <if test="orgid!=null">,#{orgid}</if>
+            <if test="orgcode!=null">,#{orgcode}</if>
+            <if test="flag!=null">,#{flag}</if>
+            <if test="partsid!=null">,#{partsid}</if>
+        </trim>
+        )
+    </insert>
+    
+    <update id="updateDao">
+        UPDATE rule
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="ruleid!=null">,ruleid = #{ruleid}</if>
+            <if test="code!=null">,code = #{code}</if>
+            <if test="codename!=null">,codename = #{codename}</if>
+            <if test="disp!=null">,disp = #{disp}</if>
+            <if test="type!=null">,type = #{type}</if>
+            <if test="monitorPointid!=null">,monitor_pointid = #{monitorPointid}</if>
+            <if test="ruleConfig!=null">,rule_config = #{ruleConfig}</if>
+            <if test="rulename!=null">,rulename = #{rulename}</if>
+            <if test="rulecontent!=null">,rulecontent = #{rulecontent}</if>
+            <if test="runrate!=0">,runrate = #{runrate}</if>
+            <if test="createtime!=null">,createtime = #{createtime}</if>
+            <if test="updatetime!=null">,updatetime = #{updatetime}</if>
+            <if test="deviceuuid!=null">,deviceuuid = #{deviceuuid}</if>
+            <if test="devicename!=null">,devicename = #{devicename}</if>
+            <if test="relationid!=null">,relationid = #{relationid}</if>
+            <if test="relationname!=null">,relationname = #{relationname}</if>
+            <if test="devicemodelid!=null">,devicemodelid = #{devicemodelid}</if>
+            <if test="devicemodelname!=null">,devicemodelname = #{devicemodelname}</if>
+            <if test="salience!=0">,salience = #{salience}</if>
+            <if test="devicetypeid!=null">,devicetypeid = #{devicetypeid}</if>
+            <if test="devicetypename!=null">,devicetypename = #{devicetypename}</if>
+            <if test="knowledgeid!=null">,knowledgeid = #{knowledgeid}</if>
+            <if test="userid!=null">,userid = #{userid}</if>
+            <if test="orgid!=null">,orgid = #{orgid}</if>
+            <if test="orgcode!=null">,orgcode = #{orgcode}</if>
+            <if test="flag!=null">,flag = #{flag}</if>
+            <if test="partsid!=null">,flag = #{partsid}</if>
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND">AND ruleid = #{ruleid}</trim>
+    </update>
+    
+    <delete id="deleteDao">
+        DELETE FROM rule
+        <trim prefix="WHERE" prefixOverrides="AND">AND ruleid = #{ruleid}</trim>
+    </delete>
+
+    <sql id="page_where">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="type!=null and type!=''">AND rule.type = #{type}</if>
+            <if test="rulename!=null and rulename!=''">AND rule.rulename like concat(concat('%',#{rulename}),'%')</if>
+            <if test="endDate!=null">AND rule.createtime &lt;= #{endDate}</if>
+            <if test="startDate!=null">AND rule.createtime &gt;= #{startDate}</if>
+            <if test="userid!=null and userid!=''">AND rule.userid = #{userid}</if>
+            <if test="orgid!=null and orgid!=''">AND rule.orgid = #{orgid}</if>
+            <if test="orgcode!=null and orgcode!=''">AND rule.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+        </trim>
+    </sql>
+
+    <sql id="order">
+        <if test="orderString!=null and sequence!=null">ORDER BY ${orderString} ${sequence}</if>
+    </sql>
+
+    <select id="pageRule" resultMap="ruleResultMap">
+        SELECT
+        <include refid="ruleColumns" />
+        FROM rule
+        <include refid="page_where" />
+        <include refid="order" />
+        <include refid="ruleLimit" />
+    </select>
+
+    <select id="pageRuleCount" resultType="java.lang.Integer">
+        SELECT
+        count(ruleid)
+        FROM rule
+        <include refid="page_where" />
+    </select>
+
+    <sql id="knowledgeRuleColumns">rule.code AS rule_code, rule.codename AS rule_codename, rule.type AS rule_type, rule.rulename AS rule_rulename, rule.relationid AS rule_relationid, rule.relationname AS rule_relationname, rule.devicemodelid AS rule_devicemodelid, rule.devicemodelname AS rule_devicemodelname</sql>
+
+    <select id="pageKnowledgeRule" resultMap="ruleResultMap">
+        SELECT
+        <include refid="knowledgeRuleColumns" />
+        FROM
+        rule rule
+        WHERE
+        rule.code not IN (SELECT k.code FROM knowledge k WHERE k.code IS NOT NULL AND k.parentid = 'father')
+        <if test="type!=null and type!=''">AND rule.type = #{type}</if>
+        <if test="rulename!=null and rulename!=''">AND rule.rulename like concat(concat('%',#{rulename}),'%')</if>
+        <if test="endDate!=null">AND rule.createtime &lt;= #{endDate}</if>
+        <if test="startDate!=null">AND rule.createtime &gt;= #{startDate}</if>
+        <if test="userid!=null and userid!=''">AND rule.userid = #{userid}</if>
+        <if test="orgid!=null and orgid!=''">AND rule.orgid = #{orgid}</if>
+        <if test="orgcode!=null and orgcode!=''">AND rule.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+        <include refid="order" />
+        <include refid="ruleLimit" />
+    </select>
+
+    <select id="pageKnowledgeRuleCount" resultType="java.lang.Integer">
+        SELECT
+        count(r.code)
+        FROM
+        rule r
+        WHERE
+        r.code not IN (SELECT k.code FROM knowledge k WHERE k.code IS NOT NULL AND k.parentid = 'father')
+        <if test="type!=null and type!=''"> AND r.type = #{type}</if>
+        <if test="rulename!=null and rulename!=''"> AND r.rulename like concat(concat('%',#{rulename}),'%')</if>
+        <if test="endDate!=null"> AND r.createtime &lt;= #{endDate}</if>
+        <if test="startDate!=null"> AND r.createtime &gt;= #{startDate}</if>
+        <if test="userid!=null and userid!=''">AND r.userid = #{userid}</if>
+        <if test="orgid!=null and orgid!=''">AND r.orgid = #{orgid}</if>
+        <if test="orgcode!=null and orgcode!=''">AND r.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+    </select>
+
+    <update id="updateKnowledgeidByCode">
+        UPDATE rule set knowledgeid = #{knowledgeid} where code = #{code}
+    </update>
+
+    <update id="updateKnowledgeidByCodes">
+        UPDATE rule set knowledgeid = '' where code in (${code})
+    </update>
+    
+</mapper>

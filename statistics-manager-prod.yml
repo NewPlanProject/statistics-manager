@@ -1,0 +1,10 @@
+device-diagnosis:
+    image: URL
+    hostname: device-diagnosis
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    ports:
+    - 7200:7200
+    restart: always
+    environment:
+        - JAVA_OPTS=-Duser.timezone=GMT+08 -Xmx4g -Xms4g -XX:+HeapDumpOnOutOfMemoryError

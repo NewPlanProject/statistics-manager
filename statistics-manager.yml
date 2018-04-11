@@ -1,0 +1,15 @@
+device-diagnosis:
+    image: URL
+    hostname: device-diagnosis
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    ports:
+    - 7200:7200
+    extra_hosts:
+          - "iottest.c.citic:10.76.3.129"
+    labels:
+      aliyun.scale: '2'
+    restart: always
+    environment:
+        - 'constraint:aliyun.node_index==8'
+        - JAVA_OPTS=-Duser.timezone=GMT+08

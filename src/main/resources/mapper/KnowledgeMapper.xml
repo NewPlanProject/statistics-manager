@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="KnowledgeMapper">
+    
+    <sql id="knowledgeColumns">knowledge.knowid AS knowledge_knowid, knowledge.analyse AS knowledge_analyse, knowledge.solution AS knowledge_solution, knowledge.userid AS knowledge_userid, knowledge.createtime AS knowledge_createtime, knowledge.updatetime AS knowledge_updatetime, knowledge.code AS knowledge_code, knowledge.type AS knowledge_type, knowledge.knowname AS knowledge_knowname, knowledge.parentid AS knowledge_parentid, knowledge.relationid AS knowledge_relationid, knowledge.relationname AS knowledge_relationname, knowledge.devicemodelid AS knowledge_devicemodelid, knowledge.devicemodelname AS knowledge_devicemodelname,knowledge.deviceid AS knowledge_deviceid,knowledge.orgid AS knowledge_orgid, knowledge.orgcode AS knowledge_orgcode, knowledge.faultcategoryid AS knowledge_faultcategoryid, knowledge.url AS knowledge_url, knowledge.disindex AS knowledge_disindex</sql>
+    
+    <sql id="knowledgeWhere">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="knowid!=null">AND knowledge.knowid = #{knowid}</if>
+            <if test="analyse!=null">AND knowledge.analyse = #{analyse}</if>
+            <if test="solution!=null">AND knowledge.solution = #{solution}</if>
+            <if test="userid!=null">AND knowledge.userid = #{userid}</if>
+            <if test="createtime!=null">AND knowledge.createtime = #{createtime}</if>
+            <if test="updatetime!=null">AND knowledge.updatetime = #{updatetime}</if>
+            <if test="code!=null">AND knowledge.code = #{code}</if>
+            <if test="type!=null">AND knowledge.type = #{type}</if>
+            <if test="knowname!=null">AND knowledge.knowname = #{knowname}</if>
+            <if test="parentid!=null">AND knowledge.parentid = #{parentid}</if>
+            <if test="relationid!=null">AND knowledge.relationid = #{relationid}</if>
+            <if test="relationname!=null">AND knowledge.relationname = #{relationname}</if>
+            <if test="devicemodelid!=null">AND knowledge.devicemodelid = #{devicemodelid}</if>
+            <if test="devicemodelname!=null">AND knowledge.devicemodelname = #{devicemodelname}</if>
+            <if test="deviceid!=null">AND knowledge.deviceid = #{deviceid}</if>
+            <if test="orgid!=null">AND knowledge.orgid = #{orgid}</if>
+            <if test="orgcode!=null and orgcode!=''">AND knowledge.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+            <if test="faultcategoryid!=null">AND knowledge.faultcategoryid = #{faultcategoryid}</if>
+            <if test="url!=null">AND knowledge.url = #{url}</if>
+            <if test="disindex!=null">AND knowledge.disindex = #{disindex}</if>
+        </trim>
+    </sql>
+    
+    <sql id="knowledgeOrder">
+        <if test="orderString!=null">ORDER BY ${orderString}</if>
+    </sql>
+    
+    <sql id="knowledgeLimit">LIMIT #{startLine},#{limitLine}</sql>
+    
+    <resultMap type="org.citic.iiot.diagnosis.domain.Knowledge" id="knowledgeResultMap">
+        <id column="knowledge_knowid" property="knowid" />
+        <result column="knowledge_analyse" property="analyse" />
+        <result column="knowledge_solution" property="solution" />
+        <result column="knowledge_userid" property="userid" />
+        <result column="knowledge_createtime" property="createtime" />
+        <result column="knowledge_updatetime" property="updatetime" />
+        <result column="knowledge_code" property="code" />
+        <result column="knowledge_type" property="type" />
+        <result column="knowledge_knowname" property="knowname" />
+        <result column="knowledge_parentid" property="parentid" />
+        <result column="knowledge_relationid" property="relationid" />
+        <result column="knowledge_relationname" property="relationname" />
+        <result column="knowledge_devicemodelid" property="devicemodelid" />
+        <result column="knowledge_devicemodelname" property="devicemodelname" />
+        <result column="knowledge_deviceid" property="deviceid" />
+        <result column="knowledge_orgid" property="orgid" />
+        <result column="knowledge_orgcode" property="orgcode" />
+        <result column="knowledge_faultcategoryid" property="faultcategoryid" />
+        <result column="knowledge_faultcategoryname" property="faultcategoryname" />
+        <result column="knowledge_url" property="url" />
+        <result column="knowledge_disindex" property="disindex" />
+    </resultMap>
+    
+    <select id="findDao" resultMap="knowledgeResultMap">
+        SELECT
+        <include refid="knowledgeColumns" />
+        FROM knowledge
+        <include refid="knowledgeWhere" />
+        <include refid="knowledgeOrder" />
+    </select>
+    
+    <select id="countDao" resultType="int">
+        SELECT COUNT(*) FROM knowledge
+        <include refid="knowledgeWhere" />
+    </select>
+    
+    <select id="pageDao" resultMap="knowledgeResultMap">
+        SELECT
+        <include refid="knowledgeColumns" />
+        FROM knowledge
+        <include refid="knowledgeWhere" />
+        <include refid="knowledgeOrder" />
+        <include refid="knowledgeLimit" />
+    </select>
+    
+    <select id="limitDao" resultMap="knowledgeResultMap">
+        SELECT
+        <include refid="knowledgeColumns" />
+        FROM knowledge
+        <include refid="knowledgeWhere" />
+        <include refid="knowledgeOrder" />
+        <include refid="knowledgeLimit" />
+    </select>
+    
+    <insert id="saveDao">
+        INSERT INTO knowledge
+        <trim prefix="(" prefixOverrides=",">
+            <if test="knowid!=null">,knowid</if>
+            <if test="analyse!=null">,analyse</if>
+            <if test="solution!=null">,solution</if>
+            <if test="userid!=null">,userid</if>
+            <if test="createtime!=null">,createtime</if>
+            <if test="updatetime!=null">,updatetime</if>
+            <if test="code!=null">,code</if>
+            <if test="type!=null">,type</if>
+            <if test="knowname!=null">,knowname</if>
+            <if test="parentid!=null">,parentid</if>
+            <if test="relationid!=null">,relationid</if>
+            <if test="relationname!=null">,relationname</if>
+            <if test="devicemodelid!=null">,devicemodelid</if>
+            <if test="devicemodelname!=null">,devicemodelname</if>
+            <if test="deviceid!=null">,deviceid</if>
+            <if test="orgid!=null">,orgid</if>
+            <if test="orgcode!=null">,orgcode</if>
+            <if test="faultcategoryid!=null">,faultcategoryid</if>
+            <if test="url!=null">,url</if>
+            <if test="disindex!=null">,disindex</if>
+        </trim>
+        ) VALUES
+        <trim prefix="(" prefixOverrides=",">
+            <if test="knowid!=null">,#{knowid}</if>
+            <if test="analyse!=null">,#{analyse}</if>
+            <if test="solution!=null">,#{solution}</if>
+            <if test="userid!=null">,#{userid}</if>
+            <if test="createtime!=null">,#{createtime}</if>
+            <if test="updatetime!=null">,#{updatetime}</if>
+            <if test="code!=null">,#{code}</if>
+            <if test="type!=null">,#{type}</if>
+            <if test="knowname!=null">,#{knowname}</if>
+            <if test="parentid!=null">,#{parentid}</if>
+            <if test="relationid!=null">,#{relationid}</if>
+            <if test="relationname!=null">,#{relationname}</if>
+            <if test="devicemodelid!=null">,#{devicemodelid}</if>
+            <if test="devicemodelname!=null">,#{devicemodelname}</if>
+            <if test="deviceid!=null">,#{deviceid}</if>
+            <if test="orgid!=null">,#{orgid}</if>
+            <if test="orgcode!=null">,#{orgcode}</if>
+            <if test="faultcategoryid!=null">,#{faultcategoryid}</if>
+            <if test="url!=null">,#{url}</if>
+            <if test="disindex!=null">,#{disindex}</if>
+        </trim>
+        )
+    </insert>
+    
+    <update id="updateDao">
+        UPDATE knowledge
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="knowid!=null">,knowid = #{knowid}</if>
+            <if test="analyse!=null">,analyse = #{analyse}</if>
+            <if test="solution!=null">,solution = #{solution}</if>
+            <if test="userid!=null">,userid = #{userid}</if>
+            <if test="createtime!=null">,createtime = #{createtime}</if>
+            <if test="updatetime!=null">,updatetime = #{updatetime}</if>
+            <if test="code!=null">,code = #{code}</if>
+            <if test="type!=null">,type = #{type}</if>
+            <if test="knowname!=null">,knowname = #{knowname}</if>
+            <if test="parentid!=null">,parentid = #{parentid}</if>
+            <if test="relationid!=null">,relationid = #{relationid}</if>
+            <if test="relationname!=null">,relationname = #{relationname}</if>
+            <if test="devicemodelid!=null">,devicemodelid = #{devicemodelid}</if>
+            <if test="devicemodelname!=null">,devicemodelname = #{devicemodelname}</if>
+            <if test="deviceid!=null">,deviceid = #{deviceid}</if>
+            <if test="orgid!=null">,orgid = #{orgid}</if>
+            <if test="orgcode!=null">,orgcode = #{orgcode}</if>
+            <if test="faultcategoryid!=null">,faultcategoryid = #{faultcategoryid}</if>
+            <if test="url!=null">,url = #{url}</if>
+            <if test="disindex!=null">,disindex = #{disindex}</if>
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND">AND knowid = #{knowid}</trim>
+    </update>
+    
+    <delete id="deleteDao">
+        DELETE FROM knowledge
+        <trim prefix="WHERE" prefixOverrides="AND">AND knowid = #{knowid}</trim>
+    </delete>
+
+    <delete id="deleteKnowledgeByCode">
+        DELETE FROM knowledge where code = #{code}
+    </delete>
+
+    <sql id="page_where">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="type!=null and type!=''"> AND knowledge.type = #{type}</if>
+            <if test="code!=null and code!=''"> AND knowledge.code like concat(concat('%',#{code}),'%')</if>
+            <if test="knowname!=null and knowname!=''"> AND knowledge.knowname like concat(concat('%',#{knowname}),'%')</if>
+            <if test="userid!=null and userid!=''">AND knowledge.userid = #{userid}</if>
+            <if test="orgid!=null and orgid!=''">AND knowledge.orgid = #{orgid}</if>
+            <if test="orgcode!=null and orgcode!=''">AND knowledge.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+        </trim>
+    </sql>
+
+    <sql id="order">
+        <if test="orderString!=null and sequence!=null">ORDER BY ${orderString} ${sequence}</if>
+    </sql>
+
+    <select id="pageKnowledge" resultMap="knowledgeResultMap">
+        SELECT
+        <include refid="knowledgeColumns" />
+        FROM knowledge
+        WHERE parentid = 'father'
+        <if test="type!=null and type!=''"> AND knowledge.type = #{type}</if>
+        <if test="code!=null and code!=''"> AND knowledge.code like concat(concat('%',#{code}),'%')</if>
+        <if test="knowname!=null and knowname!=''"> AND knowledge.knowname like concat(concat('%',#{knowname}),'%')</if>
+        <if test="userid!=null and userid!=''">AND knowledge.userid = #{userid}</if>
+        <if test="orgid!=null and orgid!=''">AND knowledge.orgid = #{orgid}</if>
+        <if test="orgcode!=null and orgcode!=''">AND knowledge.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+        <include refid="order" />
+        <include refid="knowledgeLimit" />
+    </select>
+
+    <select id="getKnowledgesDeviceId" resultMap="knowledgeResultMap">
+        SELECT
+        <include refid="knowledgeColumnsWithName" />
+        FROM knowledge as knowledge
+        left join faultcategory fc on fc.faultcategoryid = knowledge.faultcategoryid
+        WHERE
+        knowledge.deviceid = #{deviceid}
+        AND knowledge.code = #{code}
+        AND knowledge.type = #{type}
+        AND knowledge.parentid != 'father'
+        ORDER by knowledge.disindex ASC
+    </select>
+    <select id="getKnowledgesDeviceIdNull" resultMap="knowledgeResultMap">
+        SELECT
+        <include refid="knowledgeColumnsWithName" />
+        FROM knowledge as knowledge
+        left join faultcategory fc on fc.faultcategoryid = knowledge.faultcategoryid
+        WHERE
+          knowledge.deviceid is NULL
+          AND knowledge.code = #{code}
+          AND knowledge.type = #{type}
+          AND knowledge.parentid != 'father'
+        ORDER by knowledge.disindex ASC
+    </select>
+
+
+    <select id="pageKnowledgeCount" resultType="java.lang.Integer">
+        SELECT
+        count(knowid)
+        FROM knowledge
+        WHERE parentid = 'father'
+        <if test="type!=null and type!=''">AND knowledge.type = #{type}</if>
+        <if test="code!=null and code!=''">AND knowledge.code like concat(concat('%',#{code}),'%')</if>
+        <if test="knowname!=null and knowname!=''">AND knowledge.knowname like concat(concat('%',#{knowname}),'%')</if>
+        <if test="userid!=null and userid!=''">AND knowledge.userid = #{userid}</if>
+        <if test="orgid!=null and orgid!=''">AND knowledge.orgid = #{orgid}</if>
+        <if test="orgcode!=null and orgcode!=''">AND knowledge.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+    </select>
+
+    <delete id="deleteKnowledgesByCodes">
+        DELETE FROM knowledge where code in (${code})
+    </delete>
+
+    <sql id="knowledgeByDeviceIdNull">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            AND knowledge.deviceid is NULL
+            <if test="knowid!=null">AND knowledge.knowid = #{knowid}</if>
+            <if test="analyse!=null">AND knowledge.analyse = #{analyse}</if>
+            <if test="solution!=null">AND knowledge.solution = #{solution}</if>
+            <if test="userid!=null">AND knowledge.userid = #{userid}</if>
+            <if test="createtime!=null">AND knowledge.createtime = #{createtime}</if>
+            <if test="updatetime!=null">AND knowledge.updatetime = #{updatetime}</if>
+            <if test="code!=null">AND knowledge.code = #{code}</if>
+            <if test="type!=null">AND knowledge.type = #{type}</if>
+            <if test="knowname!=null">AND knowledge.knowname = #{knowname}</if>
+            <if test="parentid!=null">AND knowledge.parentid = #{parentid}</if>
+            <if test="relationid!=null">AND knowledge.relationid = #{relationid}</if>
+            <if test="relationname!=null">AND knowledge.relationname = #{relationname}</if>
+            <if test="devicemodelid!=null">AND knowledge.devicemodelid = #{devicemodelid}</if>
+            <if test="devicemodelname!=null">AND knowledge.devicemodelname = #{devicemodelname}</if>
+        </trim>
+    </sql>
+
+    <sql id="knowledgeByDeviceId">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            AND knowledge.deviceid = #{deviceid}
+            <if test="knowid!=null">AND knowledge.knowid = #{knowid}</if>
+            <if test="analyse!=null">AND knowledge.analyse = #{analyse}</if>
+            <if test="solution!=null">AND knowledge.solution = #{solution}</if>
+            <if test="userid!=null">AND knowledge.userid = #{userid}</if>
+            <if test="createtime!=null">AND knowledge.createtime = #{createtime}</if>
+            <if test="updatetime!=null">AND knowledge.updatetime = #{updatetime}</if>
+            <if test="code!=null">AND knowledge.code = #{code}</if>
+            <if test="type!=null">AND knowledge.type = #{type}</if>
+            <if test="knowname!=null">AND knowledge.knowname = #{knowname}</if>
+            <if test="parentid!=null">AND knowledge.parentid = #{parentid}</if>
+            <if test="relationid!=null">AND knowledge.relationid = #{relationid}</if>
+            <if test="relationname!=null">AND knowledge.relationname = #{relationname}</if>
+            <if test="devicemodelid!=null">AND knowledge.devicemodelid = #{devicemodelid}</if>
+            <if test="devicemodelname!=null">AND knowledge.devicemodelname = #{devicemodelname}</if>
+        </trim>
+    </sql>
+
+    <!--通过父id查询子类信息-->
+    <select id="selectListByFid" resultMap="knowledgeResultMap">
+        SELECT
+        <include refid="knowledgeColumnsWithName" />
+        FROM knowledge
+        left join faultcategory fc on fc.faultcategoryid = knowledge.faultcategoryid
+        <include refid="knowledgeWhere" />
+        ORDER by knowledge.disindex asc
+    </select>
+
+    <sql id="knowledgeColumnsWithName">
+        knowledge.knowid AS knowledge_knowid,
+        knowledge.analyse AS knowledge_analyse,
+        knowledge.solution AS knowledge_solution,
+        knowledge.userid AS knowledge_userid,
+        knowledge.createtime AS knowledge_createtime,
+        knowledge.updatetime AS knowledge_updatetime,
+        knowledge.code AS knowledge_code,
+        knowledge.type AS knowledge_type,
+        knowledge.knowname AS knowledge_knowname,
+        knowledge.parentid AS knowledge_parentid,
+        knowledge.relationid AS knowledge_relationid,
+        knowledge.relationname AS knowledge_relationname,
+        knowledge.devicemodelid AS knowledge_devicemodelid,
+        knowledge.devicemodelname AS knowledge_devicemodelname,
+        knowledge.deviceid AS knowledge_deviceid,
+        knowledge.orgid AS knowledge_orgid,
+        knowledge.orgcode AS knowledge_orgcode,
+        knowledge.faultcategoryid AS knowledge_faultcategoryid,
+        fc.faultcategory_name AS knowledge_faultcategoryname,
+        knowledge.url AS knowledge_url,
+        knowledge.disindex AS knowledge_disindex
+    </sql>
+</mapper>

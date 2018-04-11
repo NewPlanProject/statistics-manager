@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MaintainMapper">
+    
+    <sql id="maintainColumns">maintain.id AS maintain_id, maintain.title AS maintain_title, maintain.type AS maintain_type, maintain.update_date AS maintain_update_date, maintain.createtime AS maintain_createtime,maintain.userId AS maintain_userId, maintain.username AS maintain_username, maintain.deviceid AS maintain_deviceid, maintain.devicename AS maintain_devicename, maintain.detail AS maintain_detail, maintain.faultid AS maintain_faultid,maintain.orgid AS maintain_orgid,maintain.orgCode AS maintain_orgCode</sql>
+
+
+    <sql id="order">
+        <if test="orderString!=null and sequence!=null">ORDER BY ${orderString} ${sequence}</if>
+    </sql>
+    
+    <sql id="maintainWhere">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="id!=null">AND maintain.id = #{id}</if>
+            <if test="type!=null">AND maintain.type = #{type}</if>
+            <if test="userid!=null">AND maintain.userId = #{userid}</if>
+            <if test="username!=null">AND maintain.username = #{username}</if>
+            <if test="deviceid!=null">AND deviceid in
+                <foreach item="item" index="index" collection="deviceidList"
+                         open="(" separator="," close=")"> #{item}</foreach>
+            </if>
+            <if test="devicename!=null">AND maintain.devicename = #{devicename}</if>
+            <if test="detail!=null">AND maintain.detail = #{detail}</if>
+            <if test="faultid!=null">AND maintain.faultid = #{faultid}</if>
+            <if test="startDate!=null">AND maintain.update_date &gt;= #{startDate}</if>
+            <if test="endDate!=null">AND maintain.update_date &lt;=#{endDate}</if>
+            <if test="title!=null">AND maintain.title like concat(concat('%',#{title}),'%')</if>
+            <if test="orgid!=null">AND maintain.orgid = #{orgid}</if>
+            <if test="orgCode!=null">AND maintain.orgCode like concat(concat('%',#{orgCode}),'%')</if>
+        </trim>
+    </sql>
+    
+    <sql id="maintainOrder">
+        <if test="orderString!=null">ORDER BY ${orderString}</if>
+    </sql>
+    
+    <sql id="maintainLimit">LIMIT #{startLine},#{limitLine}</sql>
+    
+    <resultMap type="org.citic.iiot.diagnosis.domain.Maintain" id="maintainResultMap">
+        <result column="maintain_id" property="id" />
+        <result column="maintain_title" property="title" />
+        <result column="maintain_type" property="type" />
+        <result column="maintain_update_date" property="updateDate" />
+        <result column="maintain_createtime" property="createtime" />
+        <result column="maintain_userId" property="userid" />
+        <result column="maintain_username" property="username" />
+        <result column="maintain_deviceid" property="deviceid" />
+        <result column="maintain_devicename" property="devicename" />
+        <result column="maintain_detail" property="detail" />
+        <result column="maintain_faultid" property="faultid" />
+        <result column="maintain_orgid" property="orgid" />
+        <result column="maintain_orgCode" property="orgCode" />
+    </resultMap>
+    
+    <select id="findDao" resultMap="maintainResultMap">
+        SELECT
+        <include refid="maintainColumns" />
+        FROM maintain
+        <include refid="maintainWhere" />
+        <include refid="maintainOrder" />
+    </select>
+    
+    <select id="countDao" resultType="int">
+        SELECT COUNT(*) FROM maintain
+        <include refid="maintainWhere" />
+    </select>
+    
+    <select id="pageDao" resultMap="maintainResultMap">
+        SELECT
+        <include refid="maintainColumns" />
+        FROM maintain
+        <include refid="maintainWhere" />
+        <include refid="maintainOrder" />
+        <include refid="maintainLimit" />
+    </select>
+    
+    <select id="limitDao" resultMap="maintainResultMap">
+        SELECT
+        <include refid="maintainColumns" />
+        FROM maintain
+        <include refid="maintainWhere" />
+        <include refid="maintainOrder" />
+        <include refid="maintainLimit" />
+    </select>
+    
+    <insert id="saveDao">
+        INSERT INTO maintain
+        <trim prefix="(" prefixOverrides=",">
+            <if test="id!=null">,id</if>
+            <if test="title!=null">,title</if>
+            <if test="type!=null">,type</if>
+            <if test="updateDate!=null">,update_date</if>
+            <if test="createtime!=null">,createtime</if>
+            <if test="userid!=null">,userId</if>
+            <if test="username!=null">,username</if>
+            <if test="deviceid!=null">,deviceid</if>
+            <if test="devicename!=null">,devicename</if>
+            <if test="detail!=null">,detail</if>
+            <if test="faultid!=null">,faultid</if>
+            <if test="orgid!=null">,orgid</if>
+            <if test="orgCode!=null">,orgCode</if>
+        </trim>
+        ) VALUES
+        <trim prefix="(" prefixOverrides=",">
+            <if test="id!=null">,#{id}</if>
+            <if test="title!=null">,#{title}</if>
+            <if test="type!=null">,#{type}</if>
+            <if test="updateDate!=null">,#{updateDate}</if>
+            <if test="createtime!=null">,#{createtime}</if>
+            <if test="userid!=null">,#{userid}</if>
+            <if test="username!=null">,#{username}</if>
+            <if test="deviceid!=null">,#{deviceid}</if>
+            <if test="devicename!=null">,#{devicename}</if>
+            <if test="detail!=null">,#{detail}</if>
+            <if test="faultid!=null">,#{faultid}</if>
+            <if test="orgid!=null">,#{orgid}</if>
+            <if test="orgCode!=null">,#{orgCode}</if>
+        </trim>
+        )
+    </insert>
+    
+    <update id="updateDao">
+        UPDATE maintain
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="id!=null">,id = #{id}</if>
+            <if test="title!=null">,title = #{title}</if>
+            <if test="type!=null">,type = #{type}</if>
+            <if test="updateDate!=null">,update_date = #{updateDate}</if>
+            <if test="createtime!=null">,update_date = #{createtime}</if>
+            <if test="userid!=null">,userId = #{userid}</if>
+            <if test="username!=null">,username = #{username}</if>
+            <if test="deviceid!=null">,deviceid = #{deviceid}</if>
+            <if test="devicename!=null">,devicename = #{devicename}</if>
+            <if test="detail!=null">,detail = #{detail}</if>
+            <if test="faultid!=null">,faultid = #{faultid}</if>
+            <if test="orgid!=null">,orgid = #{orgid}</if>
+            <if test="orgCode!=null">,orgCode = #{orgCode}</if>
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND" >AND id = #{id}</trim>
+    </update>
+    
+    <delete id="deleteDao">
+        DELETE FROM maintain
+        <trim prefix="WHERE" prefixOverrides="AND">AND id = #{id}</trim>
+    </delete>
+
+
+    <select id="pageMaintain" resultMap="maintainResultMap">
+        SELECT
+        <include refid="maintainColumns" />
+        FROM maintain
+        <include refid="maintainWhere" />
+        <include refid="order" />
+        <include refid="maintainLimit" />
+    </select>
+
+    <select id="pageMaintainCount" resultType="java.lang.Integer">
+        SELECT
+        count(id)
+        FROM maintain
+        <include refid="maintainWhere" />
+    </select>
+
+    <select id="selectMaintainById" parameterType="string" resultType="org.citic.iiot.diagnosis.domain.Maintain">
+        SELECT
+        type,
+        title,
+        devicename,
+        createtime,
+        update_date,
+        deviceid,
+        faultid,
+        detail
+        FROM
+        maintain
+        WHERE id = #{id}
+        <if test="userid!=null">AND maintain.userId = #{userid}</if>
+        <if test="orgid!=null">AND maintain.orgid = #{orgid}</if>
+        <if test="orgCode!=null">AND maintain.orgCode like concat(concat('%',#{orgCode}),'%')</if>
+    </select>
+
+    <select id="getMaintainByIdExport" resultMap="maintainResultMap">
+        SELECT
+        <include refid="maintainColumns" />
+        FROM maintain
+        <include refid="maintainWhere" />
+        <include refid="order" />
+    </select>
+
+
+    <select id="getRepairCount" resultType="java.lang.Integer">
+        SELECT
+        count(id)
+        FROM maintain
+        WHERE type ="1" <!--AND DATE_FORMAT( maintain.createtime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )-->
+        <if test="userid!=null">AND maintain.userId = #{userid}</if>
+        <if test="orgid!=null">AND maintain.orgid = #{orgid}</if>
+        <if test="orgCode!=null">AND maintain.orgCode like concat(concat('%',#{orgCode}),'%')</if>
+    </select>
+
+    <select id="getMaintainCount" resultType="java.lang.Integer">
+        SELECT
+        count(id)
+        FROM maintain
+        WHERE type ="2" <!--AND DATE_FORMAT( maintain.createtime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )-->
+        <if test="userid!=null">AND maintain.userId = #{userid}</if>
+        <if test="orgid!=null">AND maintain.orgid = #{orgid}</if>
+        <if test="orgCode!=null">AND maintain.orgCode like concat(concat('%',#{orgCode}),'%')</if>
+    </select>
+
+    <select id="getRepairCountByMonth" resultType="java.lang.Integer">
+        SELECT
+        COUNT(id)
+        FROM maintain
+        WHERE TYPE ="1"  AND DATE_FORMAT(maintain.createtime,'%Y-%m')=#{month}
+        <if test="userid!=null">AND maintain.userId = #{userid}</if>
+        <if test="orgid!=null">AND maintain.orgid = #{orgid}</if>
+        <if test="orgCode!=null">AND maintain.orgCode like concat(concat('%',#{orgCode}),'%')</if>
+    </select>
+
+    <select id="getMaintainCountByMonth" resultType="java.lang.Integer">
+        SELECT
+        COUNT(id)
+        FROM maintain
+        WHERE TYPE ="2"  AND DATE_FORMAT(maintain.createtime,'%Y-%m')=#{month}
+        <if test="userid!=null">AND maintain.userId = #{userid}</if>
+        <if test="orgid!=null">AND maintain.orgid = #{orgid}</if>
+        <if test="orgCode!=null">AND maintain.orgCode like concat(concat('%',#{orgCode}),'%')</if>
+    </select>
+
+    <select id="findRepairCountByMonth" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(maintain.createtime,'%Y-%m') t, count(id) n
+        FROM maintain
+        WHERE TYPE ="1"  AND DATE_FORMAT(maintain.createtime,'%Y-%m')>
+        DATE_FORMAT(date_sub(curdate(), interval 3 month),'%Y-%m')
+        <if test="userid!=null">AND maintain.userId = #{userid}</if>
+        <if test="orgid!=null">AND maintain.orgid = #{orgid}</if>
+        <if test="orgCode!=null">AND maintain.orgCode like concat(concat('%',#{orgCode}),'%')</if>
+        GROUP BY t
+    </select>
+
+    <select id="findMaintainCountByMonth" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(maintain.createtime,'%Y-%m') t, count(id) n
+        FROM maintain
+        WHERE TYPE ="2"  AND DATE_FORMAT(maintain.createtime,'%Y-%m')>
+        DATE_FORMAT(date_sub(curdate(), interval 3 month),'%Y-%m')
+        <if test="userid!=null">AND maintain.userId = #{userid}</if>
+        <if test="orgid!=null">AND maintain.orgid = #{orgid}</if>
+        <if test="orgCode!=null">AND maintain.orgCode like concat(concat('%',#{orgCode}),'%')</if>
+        GROUP BY t
+    </select>
+
+</mapper>

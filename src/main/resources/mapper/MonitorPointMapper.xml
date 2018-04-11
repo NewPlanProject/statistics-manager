@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MonitorPointMapper">
+    
+    <sql id="monitorPointColumns">monitor_point.pointid AS monitor_point_pointid, monitor_point.foreginid AS monitor_point_foreginid, monitor_point.name AS monitor_point_name, monitor_point.xposition AS monitor_point_xposition, monitor_point.yposition AS monitor_point_yposition, monitor_point.deviceid AS monitor_point_deviceid, monitor_point.drlname AS monitor_point_drlname, monitor_point.runrate AS monitor_point_runrate, monitor_point.createtime AS monitor_point_createtime, monitor_point.lastupdate AS monitor_point_lastupdate, monitor_point.userid AS monitor_point_userid, monitor_point.orgid AS monitor_point_orgid, monitor_point.orgcode AS monitor_point_orgcode, monitor_point.flag AS monitor_point_flag</sql>
+    
+    <sql id="monitorPointWhere">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="pointid!=null">AND monitor_point.pointid = #{pointid}</if>
+            <if test="foreginid!=null">AND monitor_point.foreginid = #{foreginid}</if>
+            <if test="name!=null">AND monitor_point.name = #{name}</if>
+            <if test="xposition!=0.0">AND monitor_point.xposition = #{xposition}</if>
+            <if test="yposition!=0.0">AND monitor_point.yposition = #{yposition}</if>
+            <if test="deviceid!=null">AND monitor_point.deviceid = #{deviceid}</if>
+            <if test="drlname!=null">AND monitor_point.drlname = #{drlname}</if>
+            <if test="runrate!=0">AND monitor_point.runrate = #{runrate}</if>
+            <if test="createtime!=null">AND monitor_point.createtime = #{createtime}</if>
+            <if test="lastupdate!=null">AND monitor_point.lastupdate = #{lastupdate}</if>
+            <if test="userid!=null and userid!=''">AND monitor_point.userid = #{userid}</if>
+            <if test="orgid!=null and orgid!=''">AND monitor_point.orgid = #{orgid}</if>
+            <if test="orgcode!=null and orgcode!=''">AND monitor_point.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+            <if test="flag!=null">AND monitor_point.flag = #{flag}</if>
+        </trim>
+    </sql>
+    
+    <sql id="monitorPointOrder">
+        <if test="orderString!=null">ORDER BY ${orderString}</if>
+    </sql>
+    
+    <sql id="monitorPointLimit">LIMIT #{startLine},#{limitLine}</sql>
+    
+    <resultMap type="org.citic.iiot.diagnosis.domain.MonitorPoint" id="monitorPointResultMap">
+        <id column="monitor_point_pointid" property="pointid" />
+        <result column="monitor_point_foreginid" property="foreginid" />
+        <result column="monitor_point_name" property="name" />
+        <result column="monitor_point_xposition" property="xposition" />
+        <result column="monitor_point_yposition" property="yposition" />
+        <result column="monitor_point_deviceid" property="deviceid" />
+        <result column="monitor_point_drlname" property="drlname" />
+        <result column="monitor_point_runrate" property="runrate" />
+        <result column="monitor_point_createtime" property="createtime" />
+        <result column="monitor_point_lastupdate" property="lastupdate" />
+        <result column="monitor_point_userid" property="userid" />
+        <result column="monitor_point_orgid" property="orgid" />
+        <result column="monitor_point_orgcode" property="orgcode" />
+        <result column="monitor_point_flag" property="flag" />
+    </resultMap>
+    
+    <select id="findDao" resultMap="monitorPointResultMap">
+        SELECT
+        <include refid="monitorPointColumns" />
+        FROM monitor_point
+        <include refid="monitorPointWhere" />
+        <include refid="monitorPointOrder" />
+    </select>
+    
+    <select id="countDao" resultType="int">
+        SELECT COUNT(*) FROM monitor_point
+        <include refid="monitorPointWhere" />
+    </select>
+    
+    <select id="pageDao" resultMap="monitorPointResultMap">
+        SELECT
+        <include refid="monitorPointColumns" />
+        FROM monitor_point
+        <include refid="monitorPointWhere" />
+        <include refid="monitorPointOrder" />
+        <include refid="monitorPointLimit" />
+    </select>
+    
+    <select id="limitDao" resultMap="monitorPointResultMap">
+        SELECT
+        <include refid="monitorPointColumns" />
+        FROM monitor_point
+        <include refid="monitorPointWhere" />
+        <include refid="monitorPointOrder" />
+        <include refid="monitorPointLimit" />
+    </select>
+    
+    <insert id="saveDao">
+        INSERT INTO monitor_point
+        <trim prefix="(" prefixOverrides=",">
+            <if test="pointid!=null">,pointid</if>
+            <if test="foreginid!=null">,foreginid</if>
+            <if test="name!=null">,name</if>
+            <if test="xposition!=0.0">,xposition</if>
+            <if test="yposition!=0.0">,yposition</if>
+            <if test="deviceid!=null">,deviceid</if>
+            <if test="drlname!=null">,drlname</if>
+            <if test="runrate!=0">,runrate</if>
+            <if test="createtime!=null">,createtime</if>
+            <if test="lastupdate!=null">,lastupdate</if>
+            <if test="userid!=null">,userid</if>
+            <if test="orgid!=null">,orgid</if>
+            <if test="orgcode!=null">,orgcode</if>
+            <if test="flag!=null">,flag</if>
+        </trim>
+        ) VALUES
+        <trim prefix="(" prefixOverrides=",">
+            <if test="pointid!=null">,#{pointid}</if>
+            <if test="foreginid!=null">,#{foreginid}</if>
+            <if test="name!=null">,#{name}</if>
+            <if test="xposition!=0.0">,#{xposition}</if>
+            <if test="yposition!=0.0">,#{yposition}</if>
+            <if test="deviceid!=null">,#{deviceid}</if>
+            <if test="drlname!=null">,#{drlname}</if>
+            <if test="runrate!=0">,#{runrate}</if>
+            <if test="createtime!=null">,#{createtime}</if>
+            <if test="lastupdate!=null">,#{lastupdate}</if>
+            <if test="userid!=null">,#{userid}</if>
+            <if test="orgid!=null">,#{orgid}</if>
+            <if test="orgcode!=null">,#{orgcode}</if>
+            <if test="flag!=null">,#{flag}</if>
+        </trim>
+        )
+    </insert>
+    
+    <update id="updateDao">
+        UPDATE monitor_point
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="pointid!=null">,pointid = #{pointid}</if>
+            <if test="foreginid!=null">,foreginid = #{foreginid}</if>
+            <if test="name!=null">,name = #{name}</if>
+            <if test="xposition!=0.0">,xposition = #{xposition}</if>
+            <if test="yposition!=0.0">,yposition = #{yposition}</if>
+            <if test="deviceid!=null">,deviceid = #{deviceid}</if>
+            <if test="drlname!=null">,drlname = #{drlname}</if>
+            <if test="runrate!=0">,runrate = #{runrate}</if>
+            <if test="createtime!=null">,createtime = #{createtime}</if>
+            <if test="lastupdate!=null">,lastupdate = #{lastupdate}</if>
+            <if test="userid!=null">,userid = #{userid}</if>
+            <if test="orgid!=null">,orgid = #{orgid}</if>
+            <if test="orgcode!=null">,orgcode = #{orgcode}</if>
+            <if test="flag!=null">,flag = #{flag}</if>
+        </trim>
+        <trim prefix="WHERE" prefixOverrides="AND">AND pointid = #{pointid}</trim>
+    </update>
+    
+    <delete id="deleteDao">
+        DELETE FROM monitor_point
+        <trim prefix="WHERE" prefixOverrides="AND">AND pointid = #{pointid}</trim>
+    </delete>
+
+    <select id="getMonitorPointsByIds" resultMap="monitorPointResultMap">
+        SELECT
+        <include refid="monitorPointColumns" />
+        FROM monitor_point
+        WHERE pointid in (${pointid})
+        <if test="userid!=null and userid!=''">AND monitor_point.userid = #{userid}</if>
+        <if test="orgid!=null and orgid!=''">AND monitor_point.orgid = #{orgid}</if>
+        <if test="orgcode!=null and orgcode!=''">AND monitor_point.orgcode like concat(concat('%',#{orgcode}),'%')</if>
+    </select>
+
+    <update id="updateDrlnameAndRunrate">
+        UPDATE monitor_point set runrate = 1000000,drlname="" where pointid = #{pointid}
+    </update>
+</mapper>

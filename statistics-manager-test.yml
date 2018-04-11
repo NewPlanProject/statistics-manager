@@ -1,0 +1,12 @@
+device-diagnosis:
+    image: URL
+    hostname: device-diagnosis
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    ports:
+    - 7200:7200
+    extra_hosts:
+          - "iottest.c.citic:10.76.3.130"
+    restart: always
+    environment:
+        - JAVA_OPTS=-Duser.timezone=GMT+08
