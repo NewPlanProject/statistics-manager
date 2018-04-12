@@ -1,6 +1,6 @@
-device-diagnosis:
+statistics-manager:
     image: URL
-    hostname: device-diagnosis
+    hostname: statistics-manager
     volumes:
     - /etc/localtime:/etc/localtime:ro
     ports:
