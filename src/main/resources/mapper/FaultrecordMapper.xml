@@ -42,7 +42,7 @@
     
     <sql id="faultrecordLimit">LIMIT #{startLine},#{limitLine}</sql>
     
-    <resultMap type="org.citic.iiot.diagnosis.domain.Faultrecord" id="faultrecordResultMap">
+    <resultMap type="org.heran.edu.statistics.domain.Faultrecord" id="faultrecordResultMap">
         <id column="faultrecord_id" property="id" />
         <result column="faultrecord_name" property="name" />
         <result column="faultrecord_detail" property="detail" />

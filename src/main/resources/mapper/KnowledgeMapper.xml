@@ -35,7 +35,7 @@
     
     <sql id="knowledgeLimit">LIMIT #{startLine},#{limitLine}</sql>
     
-    <resultMap type="org.citic.iiot.diagnosis.domain.Knowledge" id="knowledgeResultMap">
+    <resultMap type="org.heran.edu.statistics.domain.Knowledge" id="knowledgeResultMap">
         <id column="knowledge_knowid" property="knowid" />
         <result column="knowledge_analyse" property="analyse" />
         <result column="knowledge_solution" property="solution" />

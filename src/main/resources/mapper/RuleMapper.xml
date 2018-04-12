@@ -42,7 +42,7 @@
     
     <sql id="ruleLimit">LIMIT #{startLine},#{limitLine}</sql>
     
-    <resultMap type="org.citic.iiot.diagnosis.domain.Rule" id="ruleResultMap">
+    <resultMap type="org.heran.edu.statistics.domain.Rule" id="ruleResultMap">
         <id column="rule_ruleid" property="ruleid" />
         <result column="rule_code" property="code" />
         <result column="rule_codename" property="codename" />

@@ -29,7 +29,7 @@
     
     <sql id="monitorPointLimit">LIMIT #{startLine},#{limitLine}</sql>
     
-    <resultMap type="org.citic.iiot.diagnosis.domain.MonitorPoint" id="monitorPointResultMap">
+    <resultMap type="org.heran.edu.statistics.domain.MonitorPoint" id="monitorPointResultMap">
         <id column="monitor_point_pointid" property="pointid" />
         <result column="monitor_point_foreginid" property="foreginid" />
         <result column="monitor_point_name" property="name" />

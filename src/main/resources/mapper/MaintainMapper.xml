@@ -36,7 +36,7 @@
     
     <sql id="maintainLimit">LIMIT #{startLine},#{limitLine}</sql>
     
-    <resultMap type="org.citic.iiot.diagnosis.domain.Maintain" id="maintainResultMap">
+    <resultMap type="org.heran.edu.statistics.domain.Maintain" id="maintainResultMap">
         <result column="maintain_id" property="id" />
         <result column="maintain_title" property="title" />
         <result column="maintain_type" property="type" />
@@ -161,7 +161,7 @@
         <include refid="maintainWhere" />
     </select>
 
-    <select id="selectMaintainById" parameterType="string" resultType="org.citic.iiot.diagnosis.domain.Maintain">
+    <select id="selectMaintainById" parameterType="string" resultType="org.heran.edu.statistics.domain.Maintain">
         SELECT
         type,
         title,
