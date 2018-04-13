@@ -20,7 +20,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.citic.iiot.diagnosis.web"))
+                .apis(RequestHandlerSelectors.basePackage("org.heran.edu.statistics.web"))
                 .paths(PathSelectors.any())
                 .build();
     }
