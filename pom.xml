@@ -5,9 +5,9 @@
     <artifactId>statistics-manager</artifactId>
 
     <parent>
-        <groupId>org.citic.iiot</groupId>
+        <groupId>org.heran.edu</groupId>
         <artifactId>micro</artifactId>
-        <version>1.2.0</version>
+        <version>1.0</version>
         <relativePath>../micro</relativePath>
     </parent>
 
